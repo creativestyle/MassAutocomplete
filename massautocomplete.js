@@ -163,7 +163,7 @@ angular.module('MassAutoComplete', [])
           update_model_value(value);
           current_options.on_detach && current_options.on_detach(value);
           current_element.unbind(EVENTS.KEYDOWN);
-          current_element.unbind(EVENTS.BLUR);
+          //current_element.unbind(EVENTS.BLUR); TODO: Find smart way to unbind this event
         }
 
         // Clear references and events.
