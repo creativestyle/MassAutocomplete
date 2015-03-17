@@ -145,7 +145,7 @@ angular.module('MassAutoComplete', [])
             function suggest_failed(error) {
               current_options.on_error && current_options.on_error(error);
             }
-          ).finally(function suggest_finally() {
+          )['finally'](function suggest_finally() {
             $scope.waiting_for_suggestion = false;
           });
         } else {
