@@ -31,9 +31,9 @@ angular.module('MassAutoComplete', [])
       };
 
       var EVENTS = {
-        KEYDOWN: 'keydown',
-        RESIZE: 'resize',
-        BLUR: 'blur'
+        KEYDOWN: 'keydown.mass',
+        RESIZE: 'resize.mass',
+        BLUR: 'blur.mass'
       };
 
       var _user_options = $scope.options() || {};
