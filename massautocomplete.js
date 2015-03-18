@@ -33,7 +33,7 @@ angular.module('MassAutoComplete', [])
       var EVENTS = {
         KEYDOWN: 'keydown.mass',
         RESIZE: 'resize.mass',
-        BLUR: 'blur.mass'
+        BLUR: 'fakeBlur.mass'
       };
 
       var _user_options = $scope.options() || {};
@@ -163,7 +163,7 @@ angular.module('MassAutoComplete', [])
           update_model_value(value);
           current_options.on_detach && current_options.on_detach(value);
           current_element.unbind(EVENTS.KEYDOWN);
-          //current_element.unbind(EVENTS.BLUR); TODO: Find smart way to unbind this event
+          current_element.unbind(EVENTS.BLUR);
         }
 
         // Clear references and events.
@@ -324,6 +324,9 @@ angular.module('MassAutoComplete', [])
       // Prevent html5/browser auto completion.
       attrs.$set('autocomplete', 'off');
 
+      element.bind('blur', function () {
+        element.triggerHandler( 'fakeBlur.mass' )
+      });
       element.bind('focus', function () {
         var options = scope.massAutocompleteItem();
         if (!options)
