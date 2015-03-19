@@ -101,24 +101,29 @@ angular.module('MassAutoComplete', [])
         $scope.selected_index = -1;
         bind_element();
 
+        function watch_function(nv, ov) {
+          // Prevent suggestion cycle when the value is the last value selected.
+          // When selecting from the menu the ng-model is updated and this watch
+          // is triggered. This causes another suggestion cycle that will provide as
+          // suggestion the value that is currently selected - this is unnecessary.
+          // Checking if element is still same.
+          if (nv === last_selected_value || target_element[0] !== $document[0].activeElement)
+            return;
+
+          if ($scope.results)
+            $scope.results.length = 0;
+
+          _position_autocomplete();
+          suggest(nv);
+        };
+
+        //if(previous_value !== '')
+        //  watch_function(previous_value,undefined);
+
         value_watch = $scope.$watch(
           function () {
             return ngmodel.$modelValue;
-          },
-          function (nv, ov) {
-            // Prevent suggestion cycle when the value is the last value selected.
-            // When selecting from the menu the ng-model is updated and this watch
-            // is triggered. This causes another suggestion cycle that will provide as
-            // suggestion the value that is currently selected - this is unnecessary.
-            if (nv === last_selected_value)
-              return;
-
-            if ($scope.results)
-              $scope.results.length = 0;
-
-            _position_autocomplete();
-            suggest(nv);
-          }
+          }, watch_function
         );
       };
       that.attach = debounce(_attach, user_options.debounce_attach);
