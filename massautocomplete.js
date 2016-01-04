@@ -17,7 +17,7 @@ angular.module('MassAutoComplete', [])
         '</ul>' +
       '</div>',
     link: function (scope, element) {
-      scope.container = angular.element(element[0].getElementsByClassName('ac-container')[0]);
+      scope.container = angular.element(element[0].querySelector('.ac-container'));
     },
     controller: ["$scope", function ($scope) {
       var that = this;
