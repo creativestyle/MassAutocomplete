@@ -17,7 +17,8 @@ angular.module('MassAutoComplete', [])
         '</ul>' +
       '</div>',
     link: function (scope, element) {
-      scope.container = angular.element(element[0].querySelector('.ac-container'));
+      // Hard dependency do jQuery to FIX issue with IE8 selectors
+      scope.container = angular.element(element.find('.ac-container'));
     },
     controller: ["$scope", function ($scope) {
       var that = this;
